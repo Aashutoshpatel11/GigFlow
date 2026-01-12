@@ -6,28 +6,30 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import LoginPage from './components/pages/LoginPage';
 import RegisterPage from './components/pages/RegisterPage';
-import GigFeed from './components/pages/GigFeed';
+import GigFeed from './components/pages/GigFeed'; // Ensure this matches your file name
 import PostGigForm from './components/PostGigForm';
 
 function App() {
-  const user:any = useAppSelector((state) => state.auth.userData); 
+  const user:any = useAppSelector((state) => state.auth.userData);
 
+  // Bonus 2: Real-time Notification Logic
   useEffect(() => {
     if (user?._id) {
       socket.emit('join', user._id);
-
-      socket.on('notification', (data: any) => {
+      
+      const handleNotification = (data: any) => {
         if (data.type === 'HIRED') {
           alert(`🎉 CONGRATULATIONS! ${data.message}`);
         }
-      });
+      };
+
+      socket.on('notification', handleNotification);
 
       return () => {
-        socket.off('notification');
+        socket.off('notification', handleNotification);
       };
     }
   }, [user]);
-
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -35,6 +37,7 @@ function App() {
       
       <main className="flex-grow container mx-auto px-4 py-8">
         <Routes>
+          {/* Public Routes */}
           <Route 
             path="/login" 
             element={!user ? <LoginPage /> : <Navigate to="/dashboard" />} 
@@ -44,6 +47,7 @@ function App() {
             element={!user ? <RegisterPage /> : <Navigate to="/dashboard" />} 
           />
 
+          {/* Private Routes (GigFlow) */}
           <Route 
             path="/dashboard" 
             element={user ? <GigFeed /> : <Navigate to="/login" />} 
@@ -52,11 +56,9 @@ function App() {
             path="/post-job" 
             element={user ? <PostGigForm /> : <Navigate to="/login" />} 
           />
-
-          <Route 
-            path="/" 
-            element={<Navigate to={user ? "/dashboard" : "/login"} />} 
-          />
+          
+          {/* Redirects */}
+          <Route path="/" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
           <Route path="*" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
         </Routes>
       </main>
