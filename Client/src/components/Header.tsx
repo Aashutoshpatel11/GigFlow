@@ -1,47 +1,44 @@
 import { useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PostGigForm from './PostGigForm';
-import { useQueryClient, useQuery } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { getCurrentUser } from '../api/user.api';
 import { login, logout } from '../store/authSlice';
 import { socket } from '../socket/socket';
 import toast from 'react-hot-toast';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import axios from 'axios';
+import { useMutation } from '@tanstack/react-query';
 
 export default function Header() {
-  // const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [tab, setTab] = useState("");
   const [displayPostGigForm, setDisplayPostGigForm] = useState(false);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const user: any = useAppSelector(state => state.auth.userData);
+  
 
-  const { data: currentUserData, isSuccess, isError, refetch } = useQuery({
-    queryKey: ['currentUser'],
-    queryFn: getCurrentUser,
-    enabled: true
-  });
+  const user:any = useAppSelector(state => state.auth.userData)
+  const getCurrentUserMutation = useMutation({
+    mutationKey: ['Current User'],
+    mutationFn: getCurrentUser
+  })
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      refetch();
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+  if( getCurrentUserMutation.isSuccess ){
+    dispatch( login(getCurrentUserMutation.data.data) )
+    socket.connect()
+  }
+  if(getCurrentUserMutation.isError){
+    dispatch( logout() )
+    navigate('/login')
+  }
 
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(login({ userData: currentUserData.data }));
-      socket.connect();
-    }
-    if (isError) {
-      dispatch(logout());
-      navigate('/login');
-    }
-  }, [isSuccess, isError]);
+  useEffect( () => {
+    setTimeout( () => {
+      getCurrentUserMutation.mutate()
+      console.log("GET CURRENT USER");
+    }, 1000 )
+  }, [] )
 
   useEffect(() => {
     if (!user) return;
