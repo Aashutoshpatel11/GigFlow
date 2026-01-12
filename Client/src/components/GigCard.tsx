@@ -15,9 +15,9 @@ const GigCard: React.FC<GigCardProps> = ({ gig, onBidClick, onViewBidsClick }) =
   const isOwner = user?._id === (typeof gig.ownerId === 'string' ? gig.ownerId : gig.ownerId._id);
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow mb-4">
+    <div className="backdrop-blur-xl p-6 rounded-lg shadow-md border border-gray-900 hover:shadow-lg transition-shadow mb-4">
       <div className="flex justify-between items-start">
-        <h3 className="text-xl font-bold text-gray-800 mb-2">{gig.title}</h3>
+        <h3 className="text-xl font-bold text-gray-100 mb-2">{gig.title}</h3>
         <span className={`px-2 py-1 rounded text-xs font-semibold ${
             gig.status === 'open' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
         }`}>
@@ -25,18 +25,18 @@ const GigCard: React.FC<GigCardProps> = ({ gig, onBidClick, onViewBidsClick }) =
         </span>
       </div>
       
-      <p className="text-gray-600 mb-4 line-clamp-3">{gig.description}</p>
+      <p className="text-gray-400 mb-4 line-clamp-3">{gig.description}</p>
       
       <div className="flex justify-between items-center mt-4 border-t pt-4">
-        <span className="text-lg font-semibold text-blue-600">
-            Budget: ${gig.budget}
+        <span className="text-md font-thin text-white/50">
+            Budget: <span className="text-green-600 font-semibold" >{gig.budget}</span>
         </span>
         
         <div className="space-x-2">
             {isOwner ? (
                 <button 
                     onClick={() => onViewBidsClick(gig)}
-                    className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition-colors text-sm"
+                    className="btn btn-primary"
                 >
                     View Bids / Hire
                 </button>
@@ -44,7 +44,7 @@ const GigCard: React.FC<GigCardProps> = ({ gig, onBidClick, onViewBidsClick }) =
                 gig.status === 'open' && (
                     <button 
                         onClick={() => onBidClick(gig)}
-                        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm"
+                        className="btn btn-secondary"
                     >
                         Place Bid
                     </button>

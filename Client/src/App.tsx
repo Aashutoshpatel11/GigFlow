@@ -1,18 +1,13 @@
 import { useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useAppSelector } from './store/hooks';
 import { socket } from './socket/socket'; 
 import Header from './components/Header';
 import Footer from './components/Footer';
-import LoginPage from './components/pages/LoginPage';
-import RegisterPage from './components/pages/RegisterPage';
-import GigFeed from './components/pages/GigFeed'; // Ensure this matches your file name
-import PostGigForm from './components/PostGigForm';
 
 function App() {
   const user:any = useAppSelector((state) => state.auth.userData);
 
-  // Bonus 2: Real-time Notification Logic
   useEffect(() => {
     if (user?._id) {
       socket.emit('join', user._id);
@@ -32,35 +27,11 @@ function App() {
   }, [user]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-800 via-black to-black text-gray-100">
       <Header />
       
       <main className="flex-grow container mx-auto px-4 py-8">
-        <Routes>
-          {/* Public Routes */}
-          <Route 
-            path="/login" 
-            element={!user ? <LoginPage /> : <Navigate to="/dashboard" />} 
-          />
-          <Route 
-            path="/register" 
-            element={!user ? <RegisterPage /> : <Navigate to="/dashboard" />} 
-          />
-
-          {/* Private Routes (GigFlow) */}
-          <Route 
-            path="/dashboard" 
-            element={user ? <GigFeed /> : <Navigate to="/login" />} 
-          />
-          <Route 
-            path="/post-job" 
-            element={user ? <PostGigForm /> : <Navigate to="/login" />} 
-          />
-          
-          {/* Redirects */}
-          <Route path="/" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
-          <Route path="*" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
-        </Routes>
+        <Outlet/>
       </main>
 
       <Footer />

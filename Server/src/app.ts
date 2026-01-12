@@ -23,8 +23,8 @@ import userRouter from "./routes/user.route.js"
 import gigRouter from "./routes/gig.route.js"
 import bidRouter from "./routes/bid.route.js"
 
-app.use("/api/users", userRouter)
-app.use("/api/gigs", gigRouter)
-app.use("/api/bids", bidRouter)
+app.use("/api/v1/users", userRouter)
+app.use("/api/v1/gigs", gigRouter)
+app.use("/api/v1/bids", bidRouter)
 
 export { app };

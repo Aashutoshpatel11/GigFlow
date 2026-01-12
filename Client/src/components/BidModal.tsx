@@ -32,11 +32,11 @@ const BidModal: React.FC<BidModalProps> = ({ gig, onClose, onSuccess }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-xl">
+    <div className="fixed inset-0 z-50 backdrop-blur-lg bg-opacity-50 flex items-center justify-center p-4">
+      <div className=" rounded-lg p-6 w-full max-w-md shadow-xl">
         <h2 className="text-2xl font-bold mb-4">Bid on: {gig.title}</h2>
         
-        {error && <div className="bg-red-100 text-red-700 p-2 rounded mb-4 text-sm">{error}</div>}
+        {error && <div className=" text-red-700 p-2 rounded mb-4 text-sm">{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -45,7 +45,7 @@ const BidModal: React.FC<BidModalProps> = ({ gig, onClose, onSuccess }) => {
               type="number"
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
-              className="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input"
               required
             />
           </div>
@@ -55,7 +55,7 @@ const BidModal: React.FC<BidModalProps> = ({ gig, onClose, onSuccess }) => {
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 h-32 resize-none"
+              className="input"
               placeholder="Why are you the best fit?"
               required
             />
@@ -65,14 +65,14 @@ const BidModal: React.FC<BidModalProps> = ({ gig, onClose, onSuccess }) => {
             <button
               type="button"
               onClick={onClose}
-              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition-colors"
+              className="btn btn-secondary"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors disabled:opacity-50"
+              className="btn btn-primary"
             >
               {loading ? 'Submitting...' : 'Submit Bid'}
             </button>

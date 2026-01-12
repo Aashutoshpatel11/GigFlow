@@ -2,7 +2,11 @@ import React, { useState } from 'react'
 import { createGig } from '../api/gig.api'
 import { useNavigate } from 'react-router-dom'
 
-const PostGigForm: React.FC = () => {
+interface ChildProps {
+  setDisplayPostGigForm: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const PostGigForm= ({setDisplayPostGigForm}:ChildProps) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [budget, setBudget] = useState<number | ''>('')
@@ -30,58 +34,74 @@ const PostGigForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-10 bg-white p-8 border border-gray-200 rounded-xl shadow-lg">
-      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Post a New Job</h2>
-      
-      {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm text-center">{error}</div>}
-      
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Job Title</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-            placeholder="e.g. Build a React Website"
-            required
-          />
+    <div className="fixed top-0 left-0 flex justify-center items-center w-screen h-screen bg-black/90 backdrop-blur-2xl z-30" >
+            <div className=" w-full h-full overflow-y-scroll bg-transparent z-50 flex justify-center items-center" >
+                <div className="w-full max-w-sm space-y-4 p-6 relative">
+                    <div className=" mb-4">
+                        <h2 className="text-2xl font-semibold text-white">{"Create Task"}</h2>
+                    </div>
+
+
+                    <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">Job Title</label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="input"
+                placeholder="e.g. Build a React Website"
+                required
+              />
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="input h-32 resize-none"
+                placeholder="Describe the project details, requirements, and deliverables..."
+                required
+              />
+            </div>
+            
+            <div className="mb-6">
+              <label className="block text-gray-700 text-sm font-bold mb-2">Budget ($)</label>
+              <input
+                type="number"
+                value={budget}
+                onChange={(e) => setBudget(Number(e.target.value))}
+                className="input"
+                placeholder="e.g. 500"
+                min="1"
+                required
+              />
+            </div>
+            
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-primary"
+            >
+              {loading ? 'Posting...' : 'Post Gig'}
+            </button>
+          </form>
+          </div>
+
+          <div className=" absolute top-5 right-10 flex justify-start items-center gap-3 pt-4">
+              <button 
+              onClick={() => setDisplayPostGigForm(false)}
+              type='button'
+              className="btn w-1/2">X</button>
+          </div>
+                    
+            </div>
         </div>
-        
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition h-32 resize-none"
-            placeholder="Describe the project details, requirements, and deliverables..."
-            required
-          />
-        </div>
-        
-        <div className="mb-6">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Budget ($)</label>
-          <input
-            type="number"
-            value={budget}
-            onChange={(e) => setBudget(Number(e.target.value))}
-            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-            placeholder="e.g. 500"
-            min="1"
-            required
-          />
-        </div>
-        
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded hover:bg-blue-700 transition duration-300 disabled:opacity-50"
-        >
-          {loading ? 'Posting...' : 'Post Gig'}
-        </button>
-      </form>
-    </div>
   );
 };
 
 export default PostGigForm;
+
+
+{/*  */}
