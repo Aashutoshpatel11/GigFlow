@@ -46,7 +46,7 @@ const ViewBidsModal: React.FC<ViewBidsModalProps> = ({ gig, onClose, onHireSucce
 
   return (
     <div className="fixed inset-0 z-50 backdrop-blur-xl bg-opacity-50 flex items-center justify-center p-4">
-      <div className=" border-2 border-gray-900 rounded-lg p-6 w-full max-w-2xl shadow-xl max-h-[80vh] overflow-y-auto">
+      <div className="bg-black border-2 border-gray-900 rounded-lg p-6 w-full max-w-2xl shadow-xl max-h-[80vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">Applicants for: {gig.title}</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-700 font-bold text-xl">&times;</button>

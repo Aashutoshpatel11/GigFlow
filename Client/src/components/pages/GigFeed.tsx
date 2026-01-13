@@ -39,7 +39,7 @@ const GigFeed: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 mt-20">
+    <div className="container mx-auto p-4 mt-20 xl:px-36 ">
       <div className="md:flex  justify-between items-center mb-6">
         <h1 className="text-3xl font-semibold text-white mb-4">Gig Feed</h1>
         <input
