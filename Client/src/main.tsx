@@ -6,15 +6,14 @@ import './index.css';
 import { Provider } from 'react-redux';
 import store from './store/store.ts'; // Changed to named import
 import { BrowserRouter, Router } from 'react-router-dom';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
+import queryClient from './assets/queryClient.ts';
 
 // PAGES
 import GigFeed from './components/pages/GigFeed.tsx';
 import ProfilePage from './components/pages/ProfilePage.tsx';
 import RegisterPage from './components/pages/RegisterPage.tsx';
 import LoginPage from './components/pages/LoginPage.tsx';
-
-const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
