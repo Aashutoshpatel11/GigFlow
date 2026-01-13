@@ -9,9 +9,11 @@ import toast from 'react-hot-toast';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
+import Notifications from './Notifications';
 
 export default function Header() {
   const [displayPostGigForm, setDisplayPostGigForm] = useState(false);
+  const [displayNotification, setDisplayNotification] = useState(false)
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -71,9 +73,14 @@ export default function Header() {
   return (
     <header className="fixed top-0 w-full z-20 border-b border-white/10 backdrop-blur-3xl">
       {displayPostGigForm && <PostGigForm setDisplayPostGigForm= {setDisplayPostGigForm} />}
+      { displayNotification && <Notifications setDisplayNotification={setDisplayNotification} />}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
+          
           <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+            <button
+            onClick={ () => setDisplayNotification(true) }
+            >🔔</button>
             <button 
             onClick={() => navigate('/')}
             className="font-bold text-xl tracking-tight text-white">
