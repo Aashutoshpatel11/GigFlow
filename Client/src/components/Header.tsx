@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PostGigForm from './PostGigForm';
-import { useQueryClient } from '@tanstack/react-query';
 import { getCurrentUser } from '../api/user.api';
 import { login, logout } from '../store/authSlice';
 import { socket } from '../socket/socket';
-import toast from 'react-hot-toast';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
@@ -17,7 +15,6 @@ export default function Header() {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   
 
   const user:any = useAppSelector(state => state.auth.userData)
@@ -38,25 +35,9 @@ export default function Header() {
   useEffect( () => {
     setTimeout( () => {
       getCurrentUserMutation.mutate()
-      console.log("GET CURRENT USER");
     }, 1000 )
   }, [] )
 
-  useEffect(() => {
-    if (!user) return;
-    const handleTask = (task: any) => {
-      queryClient.invalidateQueries({ queryKey: ["AllTasks"] });
-      if (task.assignedToId === user._id) {
-        toast.success("New Task Assigned to You", { duration: 10000 });
-      } else {
-        toast.success(`New Task Added: ${task.title}`, { duration: 10000 });
-      }
-    };
-    socket.on("Task", handleTask);
-    return () => {
-      socket.off("Task", handleTask);
-    };
-  }, [user]);
 
   const handleLogout = async () => {
     try {

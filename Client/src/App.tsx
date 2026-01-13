@@ -15,7 +15,6 @@ function App() {
       socket.emit('join', user._id);
       
       const handleNotification = (data: any) => {
-        console.log("NOTIFICATION::", data);
         
         if (data.type === 'HIRED' && data.recipientId == user._id) {
           toast.success(data.message, {
@@ -27,12 +26,16 @@ function App() {
             position:'top-right',
             duration: 9000
           } )
-        }else{
+        }else if (data.type === 'GIG_POSTED'){
           toast(data.message, {
             position:'top-right',
             duration: 9000
           } )
         }
+
+        setTimeout(() => {
+          window.location.reload();
+        },5000);
         
       };
 
