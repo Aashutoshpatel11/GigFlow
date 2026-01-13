@@ -2,8 +2,8 @@
 
 **GigFlow** is a mini-freelance marketplace platform where Clients can post jobs (Gigs) and Freelancers can apply for them (Bids). This project demonstrates complex database relationships, secure authentication, state management, transactional integrity, and real-time updates.
 
-## 🎥[Website Demo](https://gig-flow-llhb.onrender.com)
-## 🎥 Video Demo
+## 🎥 [Website Demo](https://gig-flow-llhb.onrender.com/)
+## 🎥 [Video Demo](https://drive.google.com/file/d/1PE5aGLqT5QtY9NYfH2H1kczia0FZ9RUf/view?usp=sharing)
 
 ## 📋 Project Overview
 
