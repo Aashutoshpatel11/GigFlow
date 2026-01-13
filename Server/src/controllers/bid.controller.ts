@@ -38,7 +38,7 @@ export const submitBid = asyncHandler(async (req:Request, res:Response) => {
     relatedId: gig._id
   });
 
-  io.to(gig.ownerId.toString()).emit("notification", notif);
+  io.emit("notification", notif);
 
   return res
   .status(201)
@@ -113,7 +113,7 @@ export const hireFreelancer = asyncHandler(async (req:Request, res:Response) => 
         relatedId: gig._id
     });
 
-    io.to(bidToHire.freelancerId.toString()).emit("notification", notif);
+    io.emit("notification", notif);
 
     return res.status(200).json(new ApiResponse(200, { gig, bid: bidToHire }, "Freelancer hired successfully"));
 
