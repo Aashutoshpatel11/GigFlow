@@ -2,8 +2,8 @@
 
 **GigFlow** is a mini-freelance marketplace platform where Clients can post jobs (Gigs) and Freelancers can apply for them (Bids). This project demonstrates complex database relationships, secure authentication, state management, transactional integrity, and real-time updates.
 
-## Live Demo: 
-## Video Demo
+## 🎥 Live Demo: 
+## 🎥 Video Demo
 
 ## 📋 Project Overview
 
@@ -123,9 +123,7 @@ npm run dev
 | PATCH | /api/bids/:bidId/hire | Atomic "Hire" operation | Gig Owner |
 
 
-🗄️ Database SchemaUser: 
-# ##name##, email, password
-# ##Gig##: title, description, budget, ownerId, status (open/assigned)
-# ##Bid##: gigId, freelancerId, message, status (pending/hired/rejected)
-
-🎥 Demo[Link to Loom/Demo Video Placeholder]Built for the Foto Owl AI / Full Stack Developer Internship Qualification Assignment.
+## 🗄️ Database SchemaUser: 
+* **name**, email, password
+* **Gig**: title, description, budget, ownerId, status (open/assigned)
+* **Bid**: gigId, freelancerId, message, status (pending/hired/rejected)
