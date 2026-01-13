@@ -35,7 +35,7 @@ const ViewBidsModal: React.FC<ViewBidsModalProps> = ({ gig, onClose, onHireSucce
     try {
       await hireFreelancer(bid._id);
       alert(`Successfully hired ${bid.freelancerId.name}!`);
-      onHireSuccess(); // Refresh parent state
+      onHireSuccess()
       onClose();
     } catch (err: any) {
       alert(err.response?.data?.message || "Hiring failed. Someone else might have just hired them.");
@@ -45,8 +45,8 @@ const ViewBidsModal: React.FC<ViewBidsModalProps> = ({ gig, onClose, onHireSucce
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg p-6 w-full max-w-2xl shadow-xl max-h-[80vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 backdrop-blur-xl bg-opacity-50 flex items-center justify-center p-4">
+      <div className=" border-2 border-gray-900 rounded-lg p-6 w-full max-w-2xl shadow-xl max-h-[80vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">Applicants for: {gig.title}</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-700 font-bold text-xl">&times;</button>
@@ -59,12 +59,12 @@ const ViewBidsModal: React.FC<ViewBidsModalProps> = ({ gig, onClose, onHireSucce
         ) : (
           <div className="space-y-4">
             {bids.map((bid) => (
-              <div key={bid._id} className={`border rounded-lg p-4 ${bid.status === 'hired' ? 'bg-green-50 border-green-200' : 'bg-gray-50'}`}>
+              <div key={bid._id} className={` bg-black border border-gray-900 rounded-lg p-4 ${bid.status === 'hired' ? 'bg-green-50 border-green-200' : ''}`}>
                 <div className="flex justify-between items-start">
                   <div>
                     <h4 className="font-bold text-lg">{bid.freelancerId.name} <span className="text-sm font-normal text-gray-500">({bid.freelancerId.email})</span></h4>
                     <p className="text-blue-600 font-semibold mt-1">Bid Price: ${bid.price}</p>
-                    <p className="text-gray-700 mt-2 bg-white p-2 rounded border text-sm">{bid.message}</p>
+                    <p className="text-gray-400 mt-2 bg-black p-2 rounded border border-gray-900 text-sm">{bid.message}</p>
                   </div>
                   
                   <div className="flex flex-col items-end">
@@ -80,7 +80,7 @@ const ViewBidsModal: React.FC<ViewBidsModalProps> = ({ gig, onClose, onHireSucce
                       <button
                         onClick={() => handleHire(bid)}
                         disabled={actionLoading !== null}
-                        className="bg-green-600 text-white px-4 py-2 rounded text-sm hover:bg-green-700 transition-colors disabled:opacity-50"
+                        className="btn btn-primary"
                       >
                         {actionLoading === bid._id ? 'Processing...' : 'Hire'}
                       </button>

@@ -38,7 +38,7 @@ const GigCard: React.FC<GigCardProps> = ({ gig, onBidClick, onViewBidsClick }) =
                     onClick={() => onViewBidsClick(gig)}
                     className="btn btn-primary"
                 >
-                    View Bids / Hire
+                    View Bids
                 </button>
             ) : (
                 gig.status === 'open' && (

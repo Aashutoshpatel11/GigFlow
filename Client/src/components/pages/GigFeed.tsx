@@ -4,6 +4,7 @@ import GigCard from '../GigCard';
 import BidModal from '../BidModal';
 import { getAllGigs } from '../../api/gig.api';
 import type { Gig } from '../../types';
+import ViewBidsModal from '../ViewBidsModal';
 
 const GigFeed: React.FC = () => {
   // const user = useAppSelector((state) => state.auth.userData);
@@ -11,6 +12,7 @@ const GigFeed: React.FC = () => {
   const [search, setSearch] = useState('');
   const [selectedGig, setSelectedGig] = useState<Gig | null>(null);
   const [isBidModalOpen, setIsBidModalOpen] = useState(false);
+  const [isViewBidsModal, setIsViewBidsModal] = useState(false);
 
   const fetchGigs = async () => {
     try {
@@ -31,6 +33,8 @@ const GigFeed: React.FC = () => {
   };
 
   const handleViewBidsClick = (gig: Gig) => {
+    setSelectedGig(gig);
+    setIsViewBidsModal(true)
     console.log(`View bids for gig: ${gig._id}`); 
   };
 
@@ -60,6 +64,16 @@ const GigFeed: React.FC = () => {
           <p className="text-gray-500 text-center col-span-3">No gigs found matching your search.</p>
         )}
       </div>
+
+      {
+        isViewBidsModal && selectedGig && (
+          <ViewBidsModal 
+          gig={selectedGig}
+          onClose={ ()=>setIsViewBidsModal(false) }
+          onHireSuccess={ () => fetchGigs() }  
+          />
+        )
+      }
 
       {isBidModalOpen && selectedGig && (
         <BidModal
