@@ -87,6 +87,7 @@ const PostGigForm= ({setDisplayPostGigForm}:ChildProps) => {
               >
                 {loading ? 'Posting...' : 'Post Gig'}
               </button>
+              {error && <p className="text-red-500 mt-4">{error}</p>}
           </form>
           </div>
 
