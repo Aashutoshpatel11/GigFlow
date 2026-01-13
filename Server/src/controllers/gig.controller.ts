@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import { Gig } from "../models/gig.model.js";
 import { Request, Response } from "express";
+import { getIo } from "../socket/socket.js";
 
 export const createGig = asyncHandler(async (req:Request, res:Response) => {
   const reqBody:any = req.body;
@@ -18,6 +19,14 @@ export const createGig = asyncHandler(async (req:Request, res:Response) => {
     budget,
     ownerId: req.user._id,
     status: "open"
+  });
+
+  const io = getIo()
+
+  io.emit("notification", {
+    type: "GIG_POSTED",
+    message: `New Job Posted: ${gig.title} - Budget: $${gig.budget}`,
+    relatedId: gig._id
   });
 
   return res

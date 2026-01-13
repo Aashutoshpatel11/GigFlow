@@ -13,6 +13,8 @@ function App() {
       socket.emit('join', user._id);
       
       const handleNotification = (data: any) => {
+
+        console.log("NOTIFICATION::", data)
         if (data.type === 'HIRED') {
           alert(`🎉 CONGRATULATIONS! ${data.message}`);
         }

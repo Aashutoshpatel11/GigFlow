@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { createGig } from '../api/gig.api'
 import { useNavigate } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query';
 
 interface ChildProps {
   setDisplayPostGigForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,6 +27,7 @@ const PostGigForm= ({setDisplayPostGigForm}:ChildProps) => {
     try {
       await createGig({ title, description, budget: Number(budget) });
       navigate('/dashboard')
+      setDisplayPostGigForm(false)
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to create gig');
     } finally {

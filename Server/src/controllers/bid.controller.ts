@@ -7,6 +7,7 @@ import { Gig } from "../models/gig.model.js";
 // import { io } from "../socket/socket.js"; 
 import { getIo } from "../socket/socket.js";
 import { Request, Response } from "express";
+import { Notification } from "../models/notification.model.js";
 
 
 export const submitBid = asyncHandler(async (req:Request, res:Response) => {
@@ -27,6 +28,17 @@ export const submitBid = asyncHandler(async (req:Request, res:Response) => {
     message,
     price,
   });
+
+  const io = getIo()
+
+  const notif = await Notification.create({
+    recipientId: gig.ownerId, 
+    type: "BID_RECEIVED",
+    message: `New Bid: $${price} for project "${gig.title}"`,
+    relatedId: gig._id
+  });
+
+  io.to(gig.ownerId.toString()).emit("notification", notif);
 
   return res
   .status(201)
@@ -94,11 +106,14 @@ export const hireFreelancer = asyncHandler(async (req:Request, res:Response) => 
 
     const io = getIo()
 
-    io.to(bidToHire.freelancerId.toString()).emit("notification", {
-      type: "HIRED",
-      message: `You have been hired for ${gig.title}!`,
-      gigId: gig._id
+    const notif = await Notification.create({
+        recipientId: bidToHire.freelancerId,
+        type: "HIRED",
+        message: `🎉 You have been hired for "${gig.title}"!`,
+        relatedId: gig._id
     });
+
+    io.to(bidToHire.freelancerId.toString()).emit("notification", notif);
 
     return res.status(200).json(new ApiResponse(200, { gig, bid: bidToHire }, "Freelancer hired successfully"));
 
