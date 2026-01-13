@@ -71,7 +71,7 @@ function Profile() {
     })
 
     return (
-        <div className=" w-full flex flex-col justify-center items-center p-6 md:p-12">
+        <div className=" w-full flex flex-col justify-center items-center pt-20 p-6 md:p-12">
             
             <h2 className="text-xl font-bold mb-4">Profile Details</h2>
             <form
